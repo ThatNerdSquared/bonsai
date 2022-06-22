@@ -13,4 +13,4 @@ const helloWorldHandler: InteractionHandler = async (): Promise<InteractionRespo
     };
 };
 
-export { helloWorldHandler }
+export default helloWorldHandler;
