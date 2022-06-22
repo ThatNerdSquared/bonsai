@@ -1,0 +1,8 @@
+name = "bonsai"
+main = "src/index.ts"
+compatibility_date = "2022-06-22"
+node_compat = true
+
+[vars]
+# The necessary secrets are:
+# - APPLICATION_SECRET
