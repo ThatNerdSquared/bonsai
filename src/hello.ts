@@ -2,9 +2,10 @@ import {
     InteractionHandler,
     InteractionResponse,
     InteractionResponseType,
-} from "@glenstack/cf-workers-discord-bot";
+} from '@glenstack/cf-workers-discord-bot';
 
-const helloWorldHandler: InteractionHandler = async (): Promise<InteractionResponse> => {
+// eslint-disable-next-line max-len
+const helloWorldHandler: InteractionHandler = (): Promise<InteractionResponse> => {
     return {
         type: InteractionResponseType.ChannelMessageWithSource,
         data: {

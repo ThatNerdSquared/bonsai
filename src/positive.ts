@@ -1,9 +1,14 @@
-import { InteractionHandler, InteractionResponse, InteractionResponseType } from "@glenstack/cf-workers-discord-bot";
+import {
+    InteractionHandler,
+    InteractionResponse,
+    InteractionResponseType
+} from '@glenstack/cf-workers-discord-bot';
 
 interface AffirmationsAPIResponse {
     affirmation: string
 }
 
+// eslint-disable-next-line max-len
 const positiveHandler: InteractionHandler = async (): Promise<InteractionResponse> => {
     const response = await fetch('https://www.affirmations.dev/');
     const data: AffirmationsAPIResponse = await response.json();
@@ -14,6 +19,6 @@ const positiveHandler: InteractionHandler = async (): Promise<InteractionRespons
             content: `${data.affirmation}.`
         },
     };
-}
+};
 
 export default positiveHandler;
