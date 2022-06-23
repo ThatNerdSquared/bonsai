@@ -10,6 +10,11 @@ its early stages?* 😉
 ```bash
 git clone https://github.com/ThatNerdSquared/bonsai.git
 npm ci
-wrangler secret put TOKEN
+wrangler secret put APPLICATION_ID
+# input your application ID when instructed
+wrangler secret put APPLICATION_SECRET
+# input your bot token when instructed
+wrangler secret put PUBLIC_KEY
+# input your application public key when instructed
 npm run deploy
 ```

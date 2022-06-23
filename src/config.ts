@@ -5,10 +5,10 @@ interface Config {
 }
 
 const CONFIG: Config = {
-    application_id: '988999880473182258',
-    application_secret: APPLICATION_SECRET, // stored as a secret
-    // eslint-disable-next-line max-len
-    public_key: '9aed56326c3a860a5baab2d39fc4a5ada741794e668a5e31febf333b220068d6'
+    // the following are stored as secrets via wrangler CLI
+    application_id: APPLICATION_ID,
+    application_secret: APPLICATION_SECRET,
+    public_key: PUBLIC_KEY
 };
 
 export default CONFIG;
