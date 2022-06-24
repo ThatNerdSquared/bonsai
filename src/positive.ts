@@ -3,20 +3,16 @@ import {
     InteractionResponse,
     InteractionResponseType
 } from '@glenstack/cf-workers-discord-bot';
-
-interface AffirmationsAPIResponse {
-    affirmation: string
-}
+import randomAffirmation from './data/affirmations';
 
 // eslint-disable-next-line max-len
-const positiveHandler: InteractionHandler = async (): Promise<InteractionResponse> => {
-    const response = await fetch('https://www.affirmations.dev/');
-    const data: AffirmationsAPIResponse = await response.json();
+const positiveHandler: InteractionHandler = (): InteractionResponse => {
+    const affirmation = randomAffirmation();
 
     return {
         type: InteractionResponseType.ChannelMessageWithSource,
         data: {
-            content: `${data.affirmation}.`
+            content: `${affirmation}.`
         },
     };
 };
