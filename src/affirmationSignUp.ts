@@ -4,24 +4,32 @@ import {
     InteractionResponse,
     InteractionResponseType
 } from '@glenstack/cf-workers-discord-bot';
+import createRecord from './db';
 
 // eslint-disable-next-line max-len
-const affirmationSignUpHandler: InteractionHandler = (interaction: Interaction): InteractionResponse => {
+const affirmationSignUpHandler: InteractionHandler = async (interaction: Interaction): Promise<InteractionResponse> => {
+    const user = interaction.member.user.id;
+
     const resData = interaction.data?.options;
-    let timezone;
+    let alert_time;
     if (resData) {
-        timezone = String(resData[0].value);
+        alert_time = String(resData[0].value);
     }
     else {
-        timezone = 'Error!!';
+        return {
+            type: InteractionResponseType.ChannelMessageWithSource,
+            data: {
+                content: 'Could not read timeinutc parameter.'
+            },
+        };
     }
 
-    const user = interaction.member.user.username;
+    const data = await createRecord(user, alert_time);
 
     return {
         type: InteractionResponseType.ChannelMessageWithSource,
         data: {
-            content: `${user} at ${timezone}`
+            content: `${data}`
         },
     };
 };
