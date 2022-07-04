@@ -5,4 +5,18 @@ node_compat = true
 
 [vars]
 # The necessary secrets are:
+# - APPLICATION_ID
 # - APPLICATION_SECRET
+# - PUBLIC_KEY
+# - DB_URL
+# - DB_KEY
+
+[env.dev]
+name = "bonsai-dev"
+[env.dev.vars]
+# The necessary secrets are:
+# - APPLICATION_ID
+# - APPLICATION_SECRET
+# - PUBLIC_KEY
+# - DB_URL
+# - DB_KEY
