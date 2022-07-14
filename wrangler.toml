@@ -20,3 +20,6 @@ name = "bonsai-dev"
 # - PUBLIC_KEY
 # - DB_URL
 # - DB_KEY
+
+[triggers]
+crons = ["*/1 * * * *"]

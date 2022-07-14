@@ -4,7 +4,7 @@ import {
     InteractionResponse,
     InteractionResponseType
 } from '@glenstack/cf-workers-discord-bot';
-import createRecord from './db';
+import { createRecord } from './db';
 import { isSignUpData } from './types';
 
 // eslint-disable-next-line max-len
