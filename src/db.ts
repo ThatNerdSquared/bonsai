@@ -1,39 +1,39 @@
-import { createClient } from '@supabase/supabase-js';
-import CONFIG from './config';
-import { isSignUpData, SignUpData } from './types';
+import { createClient } from "@supabase/supabase-js"
+import CONFIG from "./config"
+import { isSignUpData, SignUpData } from "./types"
 
-const supabase = createClient(CONFIG.db_url, CONFIG.db_key);
+const supabase = createClient(CONFIG.db_url, CONFIG.db_key)
 
 const createRecord = async (
     userID: string,
     alert_time: string
 ): Promise<SignUpData[]> => {
     const { data, error } = await supabase
-        .from('daily_affirmation_users')
+        .from("daily_affirmation_users")
         .insert([{
-            'user_id': userID,
-            'alert_time': alert_time
-        }]);
+            "user_id": userID,
+            "alert_time": alert_time
+        }])
     if (isSignUpData(data)) {
-        return data;
+        return data
     }
     else if (error != null) {
-        throw `${String(error)}`;
+        throw String(error)
     }
-    throw 'Could not write to DB';
-};
+    throw "Could not write to DB"
+}
 
 const readRecords = async (): Promise<SignUpData[]> => {
     const { data, error } = await supabase
-        .from('daily_affirmation_users')
-        .select();
+        .from("daily_affirmation_users")
+        .select()
     if (isSignUpData(data)) {
-        return data;
+        return data
     }
     else if (error != null) {
-        throw `${String(error)}`;
+        throw `${String(error)}`
     }
-    throw 'Could not read from DB';
-};
+    throw "Could not read from DB"
+}
 
-export { createRecord, readRecords };
+export { createRecord, readRecords }

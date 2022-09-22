@@ -13,6 +13,6 @@ const CONFIG: Config = {
     public_key: PUBLIC_KEY,
     db_url: DB_URL,
     db_key: DB_KEY
-};
+}
 
-export default CONFIG;
+export default CONFIG

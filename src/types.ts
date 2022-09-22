@@ -5,5 +5,5 @@ export interface SignUpData {
 }
 
 export const isSignUpData = (arg: unknown): arg is SignUpData[] => {
-    return arg instanceof Array<SignUpData>;
-};
+    return arg instanceof Array<SignUpData>
+}
