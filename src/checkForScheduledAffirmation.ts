@@ -1,12 +1,12 @@
 import CONFIG from "./config"
-import { REST } from "@discordjs/rest"
-import { APIDMChannel, Routes } from "discord-api-types/v10"
+import { APIDMChannel } from "discord-api-types/v10"
 import { readRecords } from "./db"
-import { SignUpData } from "./types"
+import { channelTypeGuard, SignUpData } from "./types"
 import randomAffirmation from "./data/affirmations"
+import { postToDiscordApi } from "./utils"
 
 const checkForScheduledAffirmation = async () => {
-    const rest = new REST({ version: "10" }).setToken(CONFIG.application_id)
+    // const rest = new REST({ version: "10" }).setToken(CONFIG.application_id)
 
     const data: SignUpData[] = await readRecords()
     for (const item of data) {
@@ -23,19 +23,23 @@ const checkForScheduledAffirmation = async () => {
         )
 
         if (currentTime.getTime() == comparedAlertTime.getTime()) {
-            const dmChannel = await rest.post(
-                Routes.userChannels(),
+            const dmChannel: APIDMChannel = await postToDiscordApi(
+                `${CONFIG.baseDiscordUrl}${CONFIG.userChannelRoute}`,
                 {
-                    body: {
-                        recipient_id: item.id
-                    }
-                }
-            ) as APIDMChannel
-            await rest.post(Routes.channelMessages(dmChannel.id), {
-                body: {
+                    recipient_id: item.user_id
+                },
+                channelTypeGuard
+            )
+            await postToDiscordApi(
+                `${
+                    CONFIG.baseDiscordUrl
+                }${
+                    CONFIG.channelMsgRoute(dmChannel.id)
+                }`,
+                {
                     content: randomAffirmation()
                 }
-            })
+            )
         }
         else {
             console.log(`CURRENTTIME: ${currentTime.toString()}`)
