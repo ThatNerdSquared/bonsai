@@ -1,8 +1,19 @@
 #include <dpp/dpp.h>
+#include <boost/program_options.hpp>
+namespace po = boost::program_options;
 
-const std::string    BOT_TOKEN    = "";
+int main(int ac, char* av[]) {
+    std::string BOT_TOKEN;
 
-int main() {
+    po::options_description desc("Allowed options");
+    desc.add_options()
+            ("token", po::value<std::string>(&BOT_TOKEN)->required(), "Discord bot token")
+            ;
+
+    po::variables_map vm;
+    po::store(po::parse_command_line(ac, av, desc), vm);
+    po::notify(vm);
+
     dpp::cluster bot(BOT_TOKEN);
 
     bot.on_log(dpp::utility::cout_logger());
