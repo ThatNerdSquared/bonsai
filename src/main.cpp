@@ -1,5 +1,7 @@
 #include <dpp/dpp.h>
 #include <boost/program_options.hpp>
+#include "bonsai-commands.h"
+#include <unordered_map>
 namespace po = boost::program_options;
 
 int main(int ac, char* av[]) {
@@ -18,9 +20,12 @@ int main(int ac, char* av[]) {
 
     bot.on_log(dpp::utility::cout_logger());
 
-    bot.on_slashcommand([](const dpp::slashcommand_t& event) {
+    BonsaiCommands bonsaicmds;
+
+    bot.on_slashcommand([&bonsaicmds](const dpp::slashcommand_t& event) {
         if (event.command.get_command_name() == "ping") {
             event.reply("Pong!");
+            bonsaicmds.positive_command();
         }
     });
 
