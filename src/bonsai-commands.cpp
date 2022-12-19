@@ -3,7 +3,7 @@
 
 BonsaiCommands::BonsaiCommands()
 {
-    commands["positive"] = &BonsaiCommands::positive_command;
+    commands["posit"] = &BonsaiCommands::positive_command;
 };
 
 void BonsaiCommands::positive_command()

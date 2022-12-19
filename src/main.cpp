@@ -23,16 +23,20 @@ int main(int ac, char* av[]) {
     BonsaiCommands bonsaicmds;
 
     bot.on_slashcommand([&bonsaicmds](const dpp::slashcommand_t& event) {
-        if (event.command.get_command_name() == "ping") {
-            event.reply("Pong!");
-            bonsaicmds.positive_command();
+        std::string requested_cmd = event.command.get_command_name();
+        std::cout << requested_cmd << std::endl;
+        if (bonsaicmds.commands.find(requested_cmd) == bonsaicmds.commands.end()) {
+            event.reply("Command not found!");
+        }
+        else {
+            // run cmd func here
         }
     });
 
     bot.on_ready([&bot](const dpp::ready_t& event) {
         if (dpp::run_once<struct register_bot_commands>()) {
             bot.global_command_create(
-                    dpp::slashcommand("ping", "Ping pong!", bot.me.id)
+                    dpp::slashcommand("posit", "posit!", bot.me.id)
             );
         }
     });
