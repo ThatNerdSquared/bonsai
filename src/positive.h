@@ -10,6 +10,7 @@ public:
     Positive();
     std::string cmd_name;
     std::string cmd_desc;
+    std::vector<std::string> affirmations;
     void run(dpp::slashcommand_t event);
 };
 
