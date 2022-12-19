@@ -1,6 +1,6 @@
 #include <dpp/dpp.h>
 #include <boost/program_options.hpp>
-#include "bonsai-commands.h"
+#include "positive.h"
 #include <unordered_map>
 namespace po = boost::program_options;
 
@@ -20,24 +20,26 @@ int main(int ac, char* av[]) {
 
     bot.on_log(dpp::utility::cout_logger());
 
-    BonsaiCommands bonsaicmds;
+    std::unordered_map<std::string, BonsaiCommand*> bonsaicmds;
+    bonsaicmds["positive"] = new Positive();
 
     bot.on_slashcommand([&bonsaicmds](const dpp::slashcommand_t& event) {
         std::string requested_cmd = event.command.get_command_name();
-        std::cout << requested_cmd << std::endl;
-        if (bonsaicmds.commands.find(requested_cmd) == bonsaicmds.commands.end()) {
+        if (bonsaicmds.find(requested_cmd) == bonsaicmds.end()) {
             event.reply("Command not found!");
         }
         else {
-            // run cmd func here
+            bonsaicmds[requested_cmd]->run(event);
         }
     });
 
-    bot.on_ready([&bot](const dpp::ready_t& event) {
+    std::vector<dpp::slashcommand> cmds;
+    for (auto x : bonsaicmds) {
+        cmds.push_back(dpp::slashcommand(x.first, x.second->cmd_desc, bot.me.id));
+    }
+    bot.on_ready([&bot, &cmds](const dpp::ready_t& event) {
         if (dpp::run_once<struct register_bot_commands>()) {
-            bot.global_command_create(
-                    dpp::slashcommand("posit", "posit!", bot.me.id)
-            );
+            bot.global_bulk_command_create(cmds);
         }
     });
 
