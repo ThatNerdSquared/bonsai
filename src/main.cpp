@@ -1,6 +1,8 @@
 #include <dpp/dpp.h>
 #include <boost/program_options.hpp>
 #include "positive.h"
+#include "affirmation-signup.h"
+#include <iostream>
 #include <unordered_map>
 namespace po = boost::program_options;
 
@@ -21,7 +23,11 @@ int main(int ac, char* av[]) {
     bot.on_log(dpp::utility::cout_logger());
 
     std::unordered_map<std::string, BonsaiCommand*> bonsaicmds;
-    bonsaicmds["positive"] = new Positive();
+    Positive positive;
+    std::cout << "desc1" << " " << positive.cmd_desc << std::endl;
+    bonsaicmds["positive"] = &positive;
+    std::cout << "desc2" << " " << bonsaicmds["positive"]->cmd_desc << std::endl;
+    bonsaicmds["affirmation-signup"] = new AffirmationSignUp();
 
     bot.on_slashcommand([&bonsaicmds](const dpp::slashcommand_t& event) {
         std::string requested_cmd = event.command.get_command_name();
@@ -33,13 +39,19 @@ int main(int ac, char* av[]) {
         }
     });
 
-    std::vector<dpp::slashcommand> cmds;
-    for (auto x : bonsaicmds) {
-        cmds.push_back(dpp::slashcommand(x.first, x.second->cmd_desc, bot.me.id));
-    }
-    bot.on_ready([&bot, &cmds](const dpp::ready_t& event) {
+    // std::vector<dpp::slashcommand> cmds;
+    // for (auto x : bonsaicmds) {
+    //     cmds.push_back(dpp::slashcommand(x.first, x.second->cmd_desc, bot.me.id));
+    // }
+    bot.on_ready([&bot, &bonsaicmds](const dpp::ready_t& event) {
         if (dpp::run_once<struct register_bot_commands>()) {
-            bot.global_bulk_command_create(cmds);
+            for (auto x : bonsaicmds) {
+                std::cout << "key" << " " << x.first << std::endl;
+                std::cout << "desc" << " " << x.second->cmd_desc << std::endl;
+                bot.global_command_create(
+                    dpp::slashcommand(x.first, x.second->cmd_desc, bot.me.id)
+                );
+            }
         }
     });
 
