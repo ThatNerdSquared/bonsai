@@ -1,6 +1,6 @@
 # Bonsai: A Discord bot for calm.
 
-## This project is now deprecated as I'm focusing in on more impactful ventures. I've replaced it with [Blossom](https://https://github.com/ThatNerdSquared/blossom) - check that out if you're looking for something similar.
+## This project is now deprecated as I'm focusing in on more impactful ventures. I've replaced it with [Blossom](https://github.com/ThatNerdSquared/blossom) - check that out if you're looking for something similar.
 
 ### ~~This project is in its very, very, early stages. Check back in later for a more polished bot that you can add to your server.~~
 
